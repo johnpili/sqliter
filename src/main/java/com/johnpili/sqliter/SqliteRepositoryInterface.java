@@ -1,13 +1,13 @@
-package com.johnpili.crud.sqlite;
+package com.johnpili.sqliter;
 
-import com.johnpili.crud.sqlite.exceptions.SqliteDriverNotFoundException;
+import com.johnpili.sqliter.exceptions.SqliteDriverNotFoundException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-public interface ISqliteRepository {
+public interface SqliteRepositoryInterface {
 
     //region Connection Methods
 
@@ -77,7 +77,7 @@ public interface ISqliteRepository {
      * @return
      * @throws SQLException
      */
-    <T> T getSingle(String sql, ISqliteObjectAssembler sqliteObjectAssembler) throws SQLException, SqliteDriverNotFoundException;
+    <T> T getSingle(String sql, SqliteObjectAssembler sqliteObjectAssembler) throws SQLException, SqliteDriverNotFoundException;
 
     /**
      * Query a single item using sql and map of parameters. Convert resultset to POJO via dependency injection
@@ -88,7 +88,7 @@ public interface ISqliteRepository {
      * @return
      * @throws SQLException
      */
-    <T> T getSingle(String sql, Map<Integer, Object> parameters, ISqliteObjectAssembler sqliteObjectAssembler) throws SQLException, SqliteDriverNotFoundException;
+    <T> T getSingle(String sql, Map<Integer, Object> parameters, SqliteObjectAssembler sqliteObjectAssembler) throws SQLException, SqliteDriverNotFoundException;
 
     /**
      * Query a list items using sql. Convert resultset to POJO via dependency injection
@@ -99,7 +99,7 @@ public interface ISqliteRepository {
      * @return
      * @throws SQLException
      */
-    <T> List<T> getList(String sql, ISqliteObjectAssembler sqliteObjectAssembler) throws SQLException, SqliteDriverNotFoundException;
+    <T> List<T> getList(String sql, SqliteObjectAssembler sqliteObjectAssembler) throws SQLException, SqliteDriverNotFoundException;
 
     /**
      * Query a list items using sql and map of parameters. Convert resultset to POJO via dependency injection
@@ -110,7 +110,7 @@ public interface ISqliteRepository {
      * @return
      * @throws SQLException
      */
-    <T> List<T> getList(String sql, Map<Integer, Object> parameters, ISqliteObjectAssembler sqliteObjectAssembler) throws SQLException, SqliteDriverNotFoundException;
+    <T> List<T> getList(String sql, Map<Integer, Object> parameters, SqliteObjectAssembler sqliteObjectAssembler) throws SQLException, SqliteDriverNotFoundException;
 
     //endregion
 

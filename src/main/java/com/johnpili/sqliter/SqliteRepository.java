@@ -1,7 +1,7 @@
-package com.johnpili.crud.sqlite;
+package com.johnpili.sqliter;
 
-import com.johnpili.crud.sqlite.constants.SqlStatements;
-import com.johnpili.crud.sqlite.exceptions.SqliteDriverNotFoundException;
+import com.johnpili.sqliter.constants.SqlStatements;
+import com.johnpili.sqliter.exceptions.SqliteDriverNotFoundException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,12 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.johnpili.crud.sqlite.constants.SqlStatements.LAST_INSERT_ID;
-
 /**
  * @author John Pili
  */
-public class SqliteRepository implements ISqliteRepository {
+public class SqliteRepository implements SqliteRepositoryInterface {
     private final SqliteConfig sqliteConfig;
 
     public SqliteRepository(SqliteConfig sqliteConfig) {
@@ -77,7 +75,7 @@ public class SqliteRepository implements ISqliteRepository {
     }
 
     @Override
-    public <T> T getSingle(String sql, ISqliteObjectAssembler sqliteObjectAssembler) throws SQLException, SqliteDriverNotFoundException {
+    public <T> T getSingle(String sql, SqliteObjectAssembler sqliteObjectAssembler) throws SQLException, SqliteDriverNotFoundException {
         try (Connection connection = getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 ResultSet resultSet = preparedStatement.executeQuery();
@@ -90,7 +88,7 @@ public class SqliteRepository implements ISqliteRepository {
     }
 
     @Override
-    public <T> T getSingle(String sql, Map<Integer, Object> parameters, ISqliteObjectAssembler sqliteObjectAssembler)
+    public <T> T getSingle(String sql, Map<Integer, Object> parameters, SqliteObjectAssembler sqliteObjectAssembler)
             throws SQLException, SqliteDriverNotFoundException {
         try (Connection connection = getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sanitizeSqlString(sql))) {
@@ -107,7 +105,7 @@ public class SqliteRepository implements ISqliteRepository {
     }
 
     @Override
-    public <T> List<T> getList(String sql, ISqliteObjectAssembler sqliteObjectAssembler) throws SQLException, SqliteDriverNotFoundException {
+    public <T> List<T> getList(String sql, SqliteObjectAssembler sqliteObjectAssembler) throws SQLException, SqliteDriverNotFoundException {
         try (Connection connection = getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 ResultSet resultSet = preparedStatement.executeQuery();
@@ -118,7 +116,7 @@ public class SqliteRepository implements ISqliteRepository {
 
     @Override
     public <T> List<T> getList(String sql, Map<Integer, Object> parameters,
-                               ISqliteObjectAssembler sqliteObjectAssembler) throws SQLException, SqliteDriverNotFoundException {
+                               SqliteObjectAssembler sqliteObjectAssembler) throws SQLException, SqliteDriverNotFoundException {
         try (Connection connection = getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sanitizeSqlString(sql))) {
                 if (parameters != null) {
@@ -147,7 +145,7 @@ public class SqliteRepository implements ISqliteRepository {
 
     @Override
     public List<String> getTables() throws SQLException, SqliteDriverNotFoundException {
-        return getList(SqlStatements.GET_TABLES, new ISqliteObjectAssembler() {
+        return getList(SqlStatements.GET_TABLES, new SqliteObjectAssembler() {
             @Override
             public Object assemble(ResultSet resultSet) throws SQLException {
                 return resultSet.getString(1);
@@ -159,7 +157,7 @@ public class SqliteRepository implements ISqliteRepository {
     public boolean tableExists(String name) throws SQLException, SqliteDriverNotFoundException {
         Map<Integer, Object> parameters = new HashMap<>();
         parameters.put(1, name);
-        String result = getSingle(SqlStatements.GET_TABLE_BY_NAME, parameters, new ISqliteObjectAssembler() {
+        String result = getSingle(SqlStatements.GET_TABLE_BY_NAME, parameters, new SqliteObjectAssembler() {
             @Override
             public Object assemble(ResultSet resultSet) throws SQLException {
                 return resultSet.getString("name");
@@ -219,7 +217,7 @@ public class SqliteRepository implements ISqliteRepository {
     private int getLastInsertedId(Connection connection) throws SQLException {
         if (connection != null) {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(LAST_INSERT_ID);
+            ResultSet resultSet = statement.executeQuery(SqlStatements.LAST_INSERT_ID);
             if (resultSet != null) {
                 return resultSet.getInt(1);
             }
@@ -258,7 +256,7 @@ public class SqliteRepository implements ISqliteRepository {
      * @throws SQLException
      */
     @SuppressWarnings("unchecked")
-    private <T> List<T> executeListQuery(ResultSet resultSet, ISqliteObjectAssembler sqliteObjectAssembler) throws SQLException {
+    private <T> List<T> executeListQuery(ResultSet resultSet, SqliteObjectAssembler sqliteObjectAssembler) throws SQLException {
         List<T> results = new ArrayList<>();
         while (resultSet != null && resultSet.next()) {
             results.add((T) sqliteObjectAssembler.assemble(resultSet));

@@ -1,9 +1,9 @@
-package com.johnpili.crud.sqlite;
+package com.johnpili.sqliter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class MovieAssembler implements ISqliteObjectAssembler<Movie> {
+public class MovieAssembler implements SqliteObjectAssembler<Movie> {
     private static MovieAssembler movieAssembler = null;
 
     private MovieAssembler() {}

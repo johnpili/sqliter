@@ -1,4 +1,4 @@
-package com.johnpili.crud.sqlite.exceptions;
+package com.johnpili.sqliter.exceptions;
 
 public class SqliteDriverNotFoundException extends Exception {
     public SqliteDriverNotFoundException() {

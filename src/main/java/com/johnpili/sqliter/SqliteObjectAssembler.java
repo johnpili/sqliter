@@ -1,9 +1,9 @@
-package com.johnpili.crud.sqlite;
+package com.johnpili.sqliter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public interface ISqliteObjectAssembler<T> {
+public interface SqliteObjectAssembler<T> {
     /**
      * This method is used for converting SQLite result into POJO via dependency injection
      *

@@ -1,4 +1,4 @@
-package com.johnpili.crud.sqlite.constants;
+package com.johnpili.sqliter.constants;
 
 public class TestSqlStatements {
     public static final String CREATE_TEST_TABLE = "DROP TABLE IF EXISTS movie; " +

@@ -1,7 +1,7 @@
-package com.johnpili.crud.sqlite;
+package com.johnpili.sqliter;
 
-import com.johnpili.crud.sqlite.constants.TestSqlStatements;
-import com.johnpili.crud.sqlite.exceptions.SqliteDriverNotFoundException;
+import com.johnpili.sqliter.constants.TestSqlStatements;
+import com.johnpili.sqliter.exceptions.SqliteDriverNotFoundException;
 import org.junit.jupiter.api.*;
 
 import java.io.File;

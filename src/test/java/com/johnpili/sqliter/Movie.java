@@ -1,4 +1,4 @@
-package com.johnpili.crud.sqlite;
+package com.johnpili.sqliter;
 
 public class Movie {
     private long id;

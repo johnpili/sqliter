@@ -1,4 +1,4 @@
-package com.johnpili.crud.sqlite.constants;
+package com.johnpili.sqliter.constants;
 
 public abstract class SqlStatements {
     public static final String LAST_INSERT_ID = "SELECT last_insert_rowid()";
