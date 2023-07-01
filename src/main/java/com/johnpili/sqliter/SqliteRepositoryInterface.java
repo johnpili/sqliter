@@ -14,19 +14,19 @@ public interface SqliteRepositoryInterface {
     /**
      * This method initialize the SQLite connection and driver check
      *
-     * @return
-     * @throws SQLException
-     * @throws SqliteDriverNotFoundException
+     * @return Connection
+     * @throws SQLException                  SQLException
+     * @throws SqliteDriverNotFoundException SqliteDriverNotFoundException
      */
     Connection getConnection() throws SQLException, SqliteDriverNotFoundException;
 
     /**
      * This method initialize the SQLite connection and driver check
      *
-     * @param pragmaFk
-     * @return
-     * @throws SQLException
-     * @throws SqliteDriverNotFoundException
+     * @param pragmaFk boolean
+     * @return Connection
+     * @throws SQLException                  SQLException
+     * @throws SqliteDriverNotFoundException SqliteDriverNotFoundException
      */
     Connection getConnection(boolean pragmaFk) throws SQLException, SqliteDriverNotFoundException;
 
@@ -38,30 +38,33 @@ public interface SqliteRepositoryInterface {
      * Insert into SQLite and return the generated primary ID.
      * Method will return -1 if an error occurs during execution
      *
-     * @param sql
-     * @param parameters
-     * @return
-     * @throws SQLException
+     * @param sql        String
+     * @param parameters Map&lt;Integer, Object&gt;
+     * @return int
+     * @throws SQLException                  SQLException
+     * @throws SqliteDriverNotFoundException SqliteDriverNotFoundException
      */
     int insert(String sql, Map<Integer, Object> parameters) throws SQLException, SqliteDriverNotFoundException;
 
     /**
      * Update rows in SQLite and return the number of affected rows
      *
-     * @param sql
-     * @param parameters
-     * @return
-     * @throws SQLException
+     * @param sql        String
+     * @param parameters Map&lt;Integer, Object&gt;
+     * @return int
+     * @throws SQLException                  SQLException
+     * @throws SqliteDriverNotFoundException SqliteDriverNotFoundException
      */
     int update(String sql, Map<Integer, Object> parameters) throws SQLException, SqliteDriverNotFoundException;
 
     /**
      * Delete rows in SQLite and return the number of affected rows
      *
-     * @param sql
-     * @param parameters
-     * @return
-     * @throws SQLException
+     * @param sql        String
+     * @param parameters Map&lt;Integer, Object&gt;
+     * @return int
+     * @throws SQLException                  SQLException
+     * @throws SqliteDriverNotFoundException SqliteDriverNotFoundException
      */
     int delete(String sql, Map<Integer, Object> parameters) throws SQLException, SqliteDriverNotFoundException;
 
@@ -72,43 +75,50 @@ public interface SqliteRepositoryInterface {
     /**
      * Query a single item using sql. Convert resultset to POJO via dependency injection
      *
-     * @param sql
-     * @param sqliteObjectAssembler
-     * @return
-     * @throws SQLException
+     * @param sql                   String
+     * @param sqliteObjectAssembler SqliteObjectAssembler
+     * @return returns an Object of T or null
+     * @param <T> generic type
+     * @throws SQLException                  SQLException
+     * @throws SqliteDriverNotFoundException SqliteDriverNotFoundException
      */
     <T> T getSingle(String sql, SqliteObjectAssembler sqliteObjectAssembler) throws SQLException, SqliteDriverNotFoundException;
 
     /**
      * Query a single item using sql and map of parameters. Convert resultset to POJO via dependency injection
      *
-     * @param sql
-     * @param parameters
-     * @param sqliteObjectAssembler
-     * @return
-     * @throws SQLException
+     * @param sql                   String
+     * @param parameters            Map&lt;Integer, Object&gt;
+     * @param sqliteObjectAssembler SqliteObjectAssembler
+     * @return returns an Object or null
+     * @param <T> generic type
+     * @throws SQLException                  SQLException
+     * @throws SqliteDriverNotFoundException SqliteDriverNotFoundException
      */
     <T> T getSingle(String sql, Map<Integer, Object> parameters, SqliteObjectAssembler sqliteObjectAssembler) throws SQLException, SqliteDriverNotFoundException;
 
     /**
      * Query a list items using sql. Convert resultset to POJO via dependency injection
      *
-     * @param sql
-     * @param sqliteObjectAssembler
-     * @param <T>
-     * @return
-     * @throws SQLException
+     * @param sql                   String
+     * @param sqliteObjectAssembler SqliteObjectAssembler
+     * @return returns a List&lt;T&gt; or an empty list
+     * @param <T> generic type
+     * @throws SQLException                  SQLException
+     * @throws SqliteDriverNotFoundException SqliteDriverNotFoundException
      */
     <T> List<T> getList(String sql, SqliteObjectAssembler sqliteObjectAssembler) throws SQLException, SqliteDriverNotFoundException;
 
     /**
      * Query a list items using sql and map of parameters. Convert resultset to POJO via dependency injection
      *
-     * @param sql
-     * @param parameters
-     * @param sqliteObjectAssembler
-     * @return
-     * @throws SQLException
+     * @param sql                   String
+     * @param parameters            Map&lt;Integer, Object&gt;
+     * @param sqliteObjectAssembler SqliteObjectAssembler
+     * @return returns a List&lt;T&gt; or an empty list
+     * @param <T> generic type
+     * @throws SQLException                  SQLException
+     * @throws SqliteDriverNotFoundException SqliteDriverNotFoundException
      */
     <T> List<T> getList(String sql, Map<Integer, Object> parameters, SqliteObjectAssembler sqliteObjectAssembler) throws SQLException, SqliteDriverNotFoundException;
 
@@ -119,32 +129,39 @@ public interface SqliteRepositoryInterface {
     /**
      * Method that handles create table
      *
-     * @param sql
-     * @throws SQLException
-     * @throws SqliteDriverNotFoundException
+     * @param sql String
+     * @throws SQLException                  SQLException
+     * @throws SqliteDriverNotFoundException SqliteDriverNotFoundException
      */
     void createTable(String sql) throws SQLException, SqliteDriverNotFoundException;
 
     /**
      * Method that handles alter table
      *
-     * @param sql
-     * @throws SQLException
-     * @throws SqliteDriverNotFoundException
+     * @param sql String
+     * @throws SQLException                  SQLException
+     * @throws SqliteDriverNotFoundException SqliteDriverNotFoundException
      */
     void alterTable(String sql) throws SQLException, SqliteDriverNotFoundException;
 
     /**
      * Method that handles drop table
      *
-     * @param sql
-     * @throws SQLException
-     * @throws SqliteDriverNotFoundException
+     * @param sql String
+     * @throws SQLException                  SQLException
+     * @throws SqliteDriverNotFoundException SqliteDriverNotFoundException
      */
     void dropTable(String sql) throws SQLException, SqliteDriverNotFoundException;
 
     //endregion
 
+    /**
+     * Get list of tables from SQLite
+     *
+     * @return return a List&lt;String&gt;
+     * @throws SQLException                  SQLException
+     * @throws SqliteDriverNotFoundException SqliteDriverNotFoundException
+     */
     List<String> getTables() throws SQLException, SqliteDriverNotFoundException;
 
     boolean tableExists(String name) throws SQLException, SqliteDriverNotFoundException;
